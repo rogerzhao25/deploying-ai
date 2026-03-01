@@ -4,7 +4,6 @@ Final config for Assignment 2 (course API Gateway setup).
 """
 
 from __future__ import annotations
-
 import os
 from pathlib import Path
 

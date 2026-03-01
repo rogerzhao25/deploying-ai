@@ -13,7 +13,6 @@ This memory lives only for the current Gradio session.
 """
 
 from __future__ import annotations
-
 from dataclasses import dataclass, field
 from typing import Dict, List
 
@@ -55,6 +54,7 @@ class SessionMemory:
 
         if "outdoor" in t:
             self.prefs["indoor_preference"] = "false"
+
 
     # -----------------------------------------------------
     # Chat history helpers

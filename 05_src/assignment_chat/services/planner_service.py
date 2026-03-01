@@ -1,5 +1,4 @@
 # 05_src/assignment_chat/services/planner_service.py
-
 """
 Service 3: Function Calling — plan_day_trip
 
@@ -13,7 +12,6 @@ Returns structured JSON.
 """
 
 from __future__ import annotations
-
 from typing import Dict, List
 from .semantic_service import semantic_search
 

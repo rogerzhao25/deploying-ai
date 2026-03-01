@@ -17,10 +17,10 @@ Run:
 """
 
 from __future__ import annotations
-
 import json
 import sys
 from pathlib import Path
+import re
 import gradio as gr
 from dotenv import load_dotenv
 
@@ -90,6 +90,16 @@ TOOLS = [
 # -------------------------
 # Helpers
 # -------------------------
+
+def _extract_forecast_days(text: str, default_days: int = 3) -> int:
+    # examples: "5 day forecast", "forecast 7 days", "n days forecast"
+    m = re.search(r"(\d+)\s*(day|days)", text.lower())
+    if not m:
+        return default_days
+    d = int(m.group(1))
+    return max(1, min(d, 14))
+
+
 def _trim_memory(state: SessionMemory) -> None:
     # Keep last N turns (approx 2*N messages: user+assistant)
     max_msgs = MAX_TURNS_IN_CONTEXT * 2
@@ -204,9 +214,20 @@ def respond(user_text: str, history, state: SessionMemory):
     # 3) Route intent
     intent = route_intent(user_text)
 
-    # 4) Execute the right service
+    # 4) User Question
+    text = user_text.lower()
+
+    # 5) Get days inside User Question
+    days = _extract_forecast_days(text, default_days=3)
+
+    # 6) Execute the right service
     if intent == "weather":
-        answer = get_weather_summary("Toronto")
+        if any(k in text for k in ["wear", "outfit", "clothing", "what should i wear"]):
+            answer = get_weather_summary("Toronto", mode="outfit")
+        elif any(k in text for k in ["forecast", "next", "tomorrow", "weekend", "days"]):
+            answer = get_weather_summary("Toronto", mode="forecast", days=days)
+        else:
+            answer = get_weather_summary("Toronto", mode="today")
 
     elif intent == "semantic":
         answer = _semantic_answer(user_text)

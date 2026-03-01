@@ -1,5 +1,4 @@
 # 05_src/assignment_chat/services/semantic_service.py
-
 """
 Service 2: Semantic Search (CSV + Embeddings + Chroma Persistent DB)
 
@@ -16,7 +15,6 @@ This uses Chroma PersistentClient (file persistence), NOT SQLite.
 """
 
 from __future__ import annotations
-
 from typing import Dict, List, Tuple
 import os
 import pandas as pd
@@ -131,10 +129,18 @@ def semantic_search(query: str, k: int = 5) -> List[Tuple[str, Dict]]:
 
     query_vector = embed([query])[0]
 
+    # results = collection.query(
+    #     query_embeddings=[query_vector],
+    #     n_results=k,
+    #     include=["documents", "metadatas", "distances", "ids"],
+    # )
+    # --> ValueError: Expected include item to be one of documents, embeddings, metadatas, distances, uris, data, got ids in query.
+    # --> Installed chromadb version does not allow "ids" inside include=[...]
+
     results = collection.query(
         query_embeddings=[query_vector],
         n_results=k,
-        include=["documents", "metadatas", "distances", "ids"],
+        include=["documents", "metadatas", "distances"],
     )
 
     docs = results.get("documents", [[]])[0]

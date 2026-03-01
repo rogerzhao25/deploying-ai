@@ -10,11 +10,9 @@ This decides which service should handle the user request:
 """
 
 from __future__ import annotations
-
 from typing import Literal
 
 Intent = Literal["weather", "semantic", "plan", "chitchat"]
-
 
 def route_intent(user_text: str) -> Intent:
     """Return the detected intent from user input."""

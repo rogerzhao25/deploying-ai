@@ -18,7 +18,6 @@ from __future__ import annotations
 import re
 from typing import Tuple
 
-
 # ---------------------------------------------------
 # 1) Restricted topics (assignment requirement)
 # ---------------------------------------------------
@@ -30,7 +29,6 @@ RESTRICTED_TOPICS = [
     r"\bastrology\b",
     r"\bTaylor\s+Swift\b",
 ]
-
 
 # ---------------------------------------------------
 # 2) Prompt injection / prompt reveal patterns
@@ -49,7 +47,6 @@ PROMPT_ATTACK_PATTERNS = [
     r"hidden\s+instructions",
 ]
 
-
 # Friendly responses
 RESTRICTED_MSG = (
     "Sorry — I can’t help with that topic. "
@@ -60,7 +57,6 @@ PROMPT_BLOCK_MSG = (
     "I can’t reveal or modify my system instructions, "
     "but I’d be happy to continue helping with your city planning questions!"
 )
-
 
 # ---------------------------------------------------
 # Main entry function

@@ -8,11 +8,8 @@ This module provides:
 """
 
 from __future__ import annotations
-
 from typing import Any, Dict, List, Optional
-
 from openai import OpenAI
-
 from .config import (
     OPENAI_MODEL,
     OPENAI_EMBED_MODEL,
