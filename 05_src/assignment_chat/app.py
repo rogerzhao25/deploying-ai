@@ -19,6 +19,7 @@ Run:
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 import gradio as gr
 from dotenv import load_dotenv
@@ -26,6 +27,10 @@ from dotenv import load_dotenv
 # --- Load .env / .secrets ---
 _THIS_DIR = Path(__file__).resolve().parent                 # .../05_src/assignment_chat
 _SRC_DIR = _THIS_DIR.parent                                 # .../05_src
+
+if str(_SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(_SRC_DIR))
+
 load_dotenv(_SRC_DIR / ".env")
 load_dotenv(_SRC_DIR / ".secrets")
 
@@ -235,10 +240,10 @@ def _db_status_message() -> str:
     )
 
 
-with gr.Blocks(title="City Life Assistant (Toronto)") as demo:
+with gr.Blocks(title="Toronto City Tour Assistant") as demo:
     gr.Markdown(
-        "## 🧭 City Life Assistant (Toronto)\n"
-        "**Persona:** North America Life Concierge — relaxed but reliable.\n\n"
+        "## Toronto City Tour Assistant\n"
+        "**Persona:** Tour Assistant based in Toronto — rfriendly, practical, and reliable.\n"
         "**Try asking:**\n"
         "- “What’s the weather today and what should I wear?”\n"
         "- “What attractions are nearby in Downtown?”\n"
